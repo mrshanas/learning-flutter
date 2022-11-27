@@ -9,12 +9,43 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Center(
-        child: Text('An App that sucks a lot'),
+      home: Scaffold(
+        backgroundColor: Colors.teal,
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          // ignore: prefer_const_literals_to_create_immutables
+          children: [
+            // ignore: prefer_const_constructors
+            CircleAvatar(
+              backgroundImage: const AssetImage('images/spiderman.jpg'),
+              radius: 50.0,
+            ),
+            // ignore: prefer_const_constructors
+            Text(
+              'Peter Parker',
+              // ignore: prefer_const_constructors
+              style: TextStyle(
+                fontFamily: 'Dank Mono',
+                fontSize: 30,
+                color: Colors.white,
+              ),
+            ),
+            // ignore: prefer_const_constructors
+            Text(
+              'Super Hero',
+              // ignore: prefer_const_constructors
+              style: TextStyle(
+                color: Colors.white,
+                decoration: TextDecoration.underline,
+                fontSize: 20,
+                letterSpacing: 5,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
