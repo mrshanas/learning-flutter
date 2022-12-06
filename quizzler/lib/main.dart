@@ -15,26 +15,14 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  List<Icon> scoreIcons = const [
-    Icon(
-      Icons.check,
-      color: Colors.green,
-    ),
-    Icon(
-      Icons.close,
-      color: Colors.red,
-    ),
-  ];
+
 
   int qnNumber = 0;
 
-  void changeQn() {
-    if (qnNumber >= 2) {
-      qnNumber = -1;
-    }
-
+  void checkQn(bool userAns) {
     setState(() {
-      qnNumber++;
+      quiz.checkQn(userAns);
+      quiz.nextQuestion();
     });
   }
 
@@ -50,7 +38,7 @@ class _MyAppState extends State<MyApp> {
             children: [
               Center(
                 child: Text(
-                  quiz.getQuestion(1),
+                  quiz.getCurrentQuestion(),
                   style: TextStyle(
                     color: Colors.white,
                   ),
@@ -59,11 +47,11 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () {
                   // when user clicks true
-                  changeQn();
+                  checkQn(true);
                 },
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStatePropertyAll<Color>(Colors.green),
+                  MaterialStatePropertyAll<Color>(Colors.green),
                   padding: MaterialStateProperty.all<EdgeInsets>(
                     EdgeInsets.symmetric(
                       vertical: 20.0,
@@ -82,7 +70,7 @@ class _MyAppState extends State<MyApp> {
               TextButton(
                 onPressed: () {
                   // when user clicks false
-                  changeQn();
+                  checkQn(false);
                 },
                 style: ButtonStyle(
                   backgroundColor: MaterialStatePropertyAll<Color>(Colors.red),
@@ -103,7 +91,7 @@ class _MyAppState extends State<MyApp> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: scoreIcons,
+                children: quiz.getScores(),
               )
             ],
           ),
