@@ -1,7 +1,9 @@
-import 'package:flutter/material.dart';
+// ignore_for_file: prefer_const_constructors
 
-Color cardColor = Color(0xFF1D1E33);
-Color bottomCardColor = Color(0xFFEB1555);
+import 'package:flutter/material.dart';
+import 'package:bmi_calculator/models/constants.dart';
+import 'package:bmi_calculator/components/reusable_card.dart';
+import 'package:bmi_calculator/components/button.dart';
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -11,14 +13,14 @@ class InputPage extends StatefulWidget {
 }
 
 class _InputPageState extends State<InputPage> {
+  double currentSliderValue = 10.0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
-        leading: const Icon(
-          Icons.menu,
-        ),
+        backgroundColor: kAppBarBgColor,
         title: const Text(
           'BMI Calculator',
         ),
@@ -27,14 +29,116 @@ class _InputPageState extends State<InputPage> {
         children: [
           Row(
             children: [
+              // male & female icons
               Expanded(
                 child: ReusableCard(
-                  colour: cardColor,
+                  colour: kActivecardColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.male,
+                        size: 60.0,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        'MALE',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
               Expanded(
                 child: ReusableCard(
-                  colour: cardColor,
+                  colour: kActivecardColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Icon(
+                        Icons.female,
+                        size: 60.0,
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Text(
+                        'FEMALE',
+                        style: TextStyle(
+                          fontSize: 20.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+          // slider
+          Row(
+            children: [
+              Expanded(
+                child: ReusableCard(
+                  colour: kActivecardColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'HEIGHT',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: kInactiveCardColor,
+                          ),
+                        ),
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.baseline,
+                        textBaseline: TextBaseline.alphabetic,
+                        children: [
+                          Text(
+                            currentSliderValue.toStringAsFixed(0),
+                            style: TextStyle(
+                              fontSize: 40.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Text(
+                            'cm',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              color: kInactiveCardColor,
+                            ),
+                          )
+                        ],
+                      ),
+                      SliderTheme(
+                        data: SliderThemeData(
+                          activeTrackColor: Colors.white,
+                          thumbColor: kBottomBtnColor,
+                          inactiveTrackColor: kInactiveTrackColor,
+                          overlayColor: Color(0x29E01958),
+                        ),
+                        child: Slider(
+                            value: currentSliderValue,
+                            min: 1,
+                            max: 300,
+                            onChanged: (double value) {
+                              setState(() {
+                                currentSliderValue = value;
+                              });
+                            }),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -43,21 +147,80 @@ class _InputPageState extends State<InputPage> {
             children: [
               Expanded(
                 child: ReusableCard(
-                  colour: cardColor,
+                  colour: kActivecardColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'WEIGHT',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: kInactiveCardColor,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '74',
+                        style: TextStyle(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          ReusableIconButton(
+                            onPressed: () {},
+                            iconChild: Icons.remove,
+                          ),
+                          ReusableIconButton(
+                            onPressed: () {},
+                            iconChild: Icons.add,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ],
-          ),
-          Row(
-            children: [
               Expanded(
                 child: ReusableCard(
-                  colour: cardColor,
-                ),
-              ),
-              Expanded(
-                child: ReusableCard(
-                  colour: cardColor,
+                  colour: kActivecardColor,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 8.0),
+                        child: Text(
+                          'AGE',
+                          style: TextStyle(
+                            fontSize: 18.0,
+                            color: kInactiveCardColor,
+                          ),
+                        ),
+                      ),
+                      Text(
+                        '19',
+                        style: TextStyle(
+                          fontSize: 40.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          ReusableIconButton(
+                            onPressed: () {},
+                            iconChild: Icons.remove,
+                          ),
+                          ReusableIconButton(
+                            onPressed: () {},
+                            iconChild: Icons.add,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -65,41 +228,19 @@ class _InputPageState extends State<InputPage> {
           Expanded(
               child: ReusableCard(
             cardMargin: EdgeInsets.all(2.0),
-            colour: bottomCardColor,
+            colour: kBottomBtnColor,
             height: 80.0,
+            child: Center(
+              child: Text(
+                'Calculate BMI',
+                style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ))
         ],
-      ),
-    );
-  }
-}
-
-class ReusableCard extends StatefulWidget {
-  ReusableCard(
-      {Key? key,
-      required this.colour,
-      this.height = 200.0,
-      this.cardMargin = const EdgeInsets.all(8.0)})
-      : super(key: key);
-
-  final Color colour;
-  double height;
-  EdgeInsets cardMargin;
-
-  @override
-  State<ReusableCard> createState() => _ReusableCardState();
-}
-
-class _ReusableCardState extends State<ReusableCard> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: widget.height,
-      margin: widget.cardMargin,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4.0),
-        color: widget.colour,
       ),
     );
   }
