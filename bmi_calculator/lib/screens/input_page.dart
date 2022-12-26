@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+
+import 'package:bmi_calculator/screens/result_page.dart';
 import 'package:bmi_calculator/models/constants.dart';
 import 'package:bmi_calculator/components/reusable_card.dart';
 import 'package:bmi_calculator/components/button.dart';
+import 'package:bmi_calculator/models/bmi.dart';
+
+enum Gender { male, female }
 
 class InputPage extends StatefulWidget {
   const InputPage({Key? key}) : super(key: key);
@@ -14,6 +18,15 @@ class InputPage extends StatefulWidget {
 
 class _InputPageState extends State<InputPage> {
   double currentSliderValue = 10.0;
+  Gender selectedGender = Gender.male;
+  int weight = 74;
+  int age = 19;
+
+  void setGender(Gender gender) {
+    setState(() {
+      selectedGender = gender;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,50 +44,72 @@ class _InputPageState extends State<InputPage> {
             children: [
               // male & female icons
               Expanded(
-                child: ReusableCard(
-                  colour: kActivecardColor,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.male,
-                        size: 60.0,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        'MALE',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    setGender(Gender.male);
+                  },
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.male,
+                          size: 60.0,
+                          color: selectedGender == Gender.male
+                              ? Colors.white
+                              : kInactiveCardColor,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'MALE',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: selectedGender == Gender.male
+                                ? Colors.white
+                                : kInactiveCardColor,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
               Expanded(
-                child: ReusableCard(
-                  colour: kActivecardColor,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.female,
-                        size: 60.0,
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Text(
-                        'FEMALE',
-                        style: TextStyle(
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    setGender(Gender.female);
+                  },
+                  child: ReusableCard(
+                    colour: kActiveCardColor,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.female,
+                          size: 60.0,
+                          color: selectedGender == Gender.female
+                              ? Colors.white
+                              : kInactiveCardColor,
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Text(
+                          'FEMALE',
+                          style: TextStyle(
+                            fontSize: 20.0,
+                            fontWeight: FontWeight.bold,
+                            color: selectedGender == Gender.female
+                                ? Colors.white
+                                : kInactiveCardColor,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -85,7 +120,7 @@ class _InputPageState extends State<InputPage> {
             children: [
               Expanded(
                 child: ReusableCard(
-                  colour: kActivecardColor,
+                  colour: kActiveCardColor,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -147,7 +182,7 @@ class _InputPageState extends State<InputPage> {
             children: [
               Expanded(
                 child: ReusableCard(
-                  colour: kActivecardColor,
+                  colour: kActiveCardColor,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -162,7 +197,7 @@ class _InputPageState extends State<InputPage> {
                         ),
                       ),
                       Text(
-                        '74',
+                        weight.toString(),
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
@@ -171,11 +206,19 @@ class _InputPageState extends State<InputPage> {
                       Row(
                         children: [
                           ReusableIconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                weight--;
+                              });
+                            },
                             iconChild: Icons.remove,
                           ),
                           ReusableIconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                weight++;
+                              });
+                            },
                             iconChild: Icons.add,
                           ),
                         ],
@@ -186,7 +229,7 @@ class _InputPageState extends State<InputPage> {
               ),
               Expanded(
                 child: ReusableCard(
-                  colour: kActivecardColor,
+                  colour: kActiveCardColor,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -201,7 +244,7 @@ class _InputPageState extends State<InputPage> {
                         ),
                       ),
                       Text(
-                        '19',
+                        age.toString(),
                         style: TextStyle(
                           fontSize: 40.0,
                           fontWeight: FontWeight.bold,
@@ -210,11 +253,19 @@ class _InputPageState extends State<InputPage> {
                       Row(
                         children: [
                           ReusableIconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                age--;
+                              });
+                            },
                             iconChild: Icons.remove,
                           ),
                           ReusableIconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              setState(() {
+                                age++;
+                              });
+                            },
                             iconChild: Icons.add,
                           ),
                         ],
@@ -226,20 +277,34 @@ class _InputPageState extends State<InputPage> {
             ],
           ),
           Expanded(
+            child: GestureDetector(
+              onTap: () {
+                BMI bmi = BMI(weight: weight, height: currentSliderValue / 100);
+
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) =>
+                      ResultsPage(
+                        value: bmi.getBMI(),
+                        result: bmi.getResult(),
+                      ),
+                ));
+              },
               child: ReusableCard(
-            cardMargin: EdgeInsets.all(2.0),
-            colour: kBottomBtnColor,
-            height: 80.0,
-            child: Center(
-              child: Text(
-                'Calculate BMI',
-                style: TextStyle(
-                  fontSize: 24.0,
-                  fontWeight: FontWeight.bold,
+                cardMargin: EdgeInsets.all(2.0),
+                colour: kBottomBtnColor,
+                height: 80.0,
+                child: Center(
+                  child: Text(
+                    'Calculate BMI',
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ),
               ),
             ),
-          ))
+          ),
         ],
       ),
     );
